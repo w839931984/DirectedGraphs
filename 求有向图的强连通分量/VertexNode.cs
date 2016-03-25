@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace 求有向图的强连通分量
 {
-    class VertexNode
+    public class VertexNode
     {
         private EdgeNode firstin;
         private EdgeNode firstout;
