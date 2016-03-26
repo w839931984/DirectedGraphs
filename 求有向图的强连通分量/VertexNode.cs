@@ -8,7 +8,7 @@ namespace 求有向图的强连通分量
 {
     public class VertexNode
     {
-        private EdgeNode firstin;
-        private EdgeNode firstout;
+        public EdgeNode firstin;
+        public EdgeNode firstout;
     }
 }

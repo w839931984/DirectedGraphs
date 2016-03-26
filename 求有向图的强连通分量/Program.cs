@@ -16,7 +16,7 @@ namespace 求有向图的强连通分量
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new VertexNumForm());
+            Application.Run(new mainForm());
         }
     }
 }

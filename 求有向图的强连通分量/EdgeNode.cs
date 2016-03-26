@@ -8,9 +8,9 @@ namespace 求有向图的强连通分量
 {
     public class EdgeNode
     {
-        private int tailvex;
-        private int headvex;
-        private EdgeNode headlink;
-        private EdgeNode taillink;
+        public int tailvex;
+        public int headvex;
+        public EdgeNode headlink;
+        public EdgeNode taillink;
     }
 }
