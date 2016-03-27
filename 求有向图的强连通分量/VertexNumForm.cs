@@ -40,7 +40,14 @@ namespace 求有向图的强连通分量
         {
             if (userClose)
             {
-                mainForm.closeForm();
+                if (DialogResult.Yes == MessageBox.Show("是否退出程序?", "确认退出", MessageBoxButtons.YesNo))
+                {
+                    mainForm.closeForm();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
             }
         }
 

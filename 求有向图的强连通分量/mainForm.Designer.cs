@@ -40,7 +40,7 @@
             this.Name = "mainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "有向图";
-            this.Shown += new System.EventHandler(this.mainForm_Shown);
+            this.Load += new System.EventHandler(this.mainForm_Load);
             this.ResumeLayout(false);
 
         }

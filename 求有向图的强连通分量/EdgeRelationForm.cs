@@ -14,7 +14,10 @@ namespace 求有向图的强连通分量
     {
         private static int stepx = 80;
         private static int stepy = 40;
+
         private static VertexNode[] vertexs;
+
+        private static Boolean userClose = true;
 
         private static EdgeRelationForm EdgeRelationForm_this;
 
@@ -121,12 +124,28 @@ namespace 求有向图的强连通分量
                 }
             }
             mainForm.vertexs = vertexs;
+            userClose = false;
             EdgeRelationForm_this.Close();
         }
 
         private void EdgeRelationForm_Shown(object sender, EventArgs e)
         {
             this.Size = new Size(this.Size.Width + 20, this.Size.Height);
+        }
+
+        private void EdgeRelationForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (userClose)
+            {
+                if (DialogResult.Yes == MessageBox.Show("是否退出程序?", "确认退出", MessageBoxButtons.YesNo))
+                {
+                    mainForm.closeForm();
+                }
+                else
+                {
+                    e.Cancel = true;
+                }
+            }
         }
     }
 }

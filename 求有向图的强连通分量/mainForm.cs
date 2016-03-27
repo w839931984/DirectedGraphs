@@ -20,14 +20,7 @@ namespace 求有向图的强连通分量
         {
             m_this = this;
             InitializeComponent();
-        }
-
-        private void mainForm_Shown(object sender, EventArgs e)
-        {
-            this.Visible = false;
-            new VertexNumForm().ShowDialog();
-
-            //这里开始绘制有向图
+            
         }
 
         public static void closeForm()
@@ -38,6 +31,13 @@ namespace 求有向图的强连通分量
         public static void setVisible(Boolean b)
         {
             m_this.Visible = b;
+        }
+
+        private void mainForm_Load(object sender, EventArgs e)
+        {
+            new VertexNumForm().ShowDialog();
+
+            //这里开始绘制有向图
         }
 
     }
