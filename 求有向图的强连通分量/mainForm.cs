@@ -83,37 +83,76 @@ namespace 求有向图的强连通分量
         {
             int tailvexNum = edgeNode.tailvex;
             int headvexNum = edgeNode.headvex;
+
+            //尾结点
             VertexNode tailvex = vertexs[tailvexNum];
+            //头结点
             VertexNode headvex = vertexs[headvexNum];
+            
             int x1 = tailvex.posx;
             int y1 = tailvex.posy;
             int x2 = headvex.posx;
             int y2 = headvex.posy;
 
+            //计算箭头合适的长度
             double len = Math.Sqrt((x1 - x2) * (x1 - x2) + (y1 - y2) * (y1 - y2));
-            int w = (int)(40 / len * Math.Abs(x1 - x2));
-            int h = (int)(40 / len * Math.Abs(y1 - y2));
+            int w = (int)(40 * Math.Abs(x1 - x2) / len);
+            int h = (int)(40 * Math.Abs(y1 - y2) / len);
+            int directionX = 0;
+            int directionY = 0;
 
             if (x1 > x2)
             {
                 x1 = x1 - w;
                 x2 = x2 + w;
+                //设置箭头平移方向
+                directionX = 1;
             }
             else if (x1 < x2)
             {
                 x1 = x1 + w;
                 x2 = x2 - w;
+                directionX = -1;
             }
             if (y1 > y2)
             {
                 y1 = y1 - h;
                 y2 = y2 + h;
+                directionY = -1;
             }
             else if (y1 < y2)
             {
                 y1 = y1 + h;
                 y2 = y2 - h;
+                directionY = 1;
             }
+
+            //计算偏移量
+            int movex;
+            int movey;
+            if (x1 == x2)
+            {
+                movex = directionY * 7;
+            }
+            else
+            {
+                movex = directionX * (int)(7 * Math.Abs(y1 - y2) / len);
+            }
+            if (y1 == y2)
+            {
+                movey = directionX * 7;
+            }
+            else 
+            {
+                movey = directionY * (int)(7 * Math.Abs(x1 - x2) / len);
+            }
+            
+            x1 = x1 + movex;
+            y1 = y1 + movey;
+            x2 = x2 + movex;
+            y2 = y2 + movey;
+
+            //画线
             g.DrawLine(p, x1, y1, x2, y2);
         }
 
@@ -131,6 +170,12 @@ namespace 求有向图的强连通分量
             }
             int half = vertexs.Length / 2;
             this.Height = (int)(300 * (1 - Math.Cos(2 * Math.PI / vertexs.Length * half))) + 100;
+        }
+
+        private void mainForm_Shown(object sender, EventArgs e)
+        {
+            //求有向强连通分量
+
         }
 
     }

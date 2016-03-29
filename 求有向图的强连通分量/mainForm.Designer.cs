@@ -42,6 +42,7 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "有向图";
             this.Load += new System.EventHandler(this.mainForm_Load);
+            this.Shown += new System.EventHandler(this.mainForm_Shown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.mainForm_Paint);
             this.ResumeLayout(false);
 
