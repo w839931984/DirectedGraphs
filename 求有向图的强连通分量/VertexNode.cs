@@ -12,5 +12,6 @@ namespace 求有向图的强连通分量
         public EdgeNode firstout;
         public int posx;
         public int posy;
+        public Boolean visited = false;
     }
 }

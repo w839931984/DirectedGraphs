@@ -124,6 +124,8 @@ namespace 求有向图的强连通分量
                 }
             }
             mainForm.vertexs = vertexs;
+            mainForm.DFN = new int[vertexs.Length];
+            mainForm.LOW = new int[vertexs.Length];
             userClose = false;
             EdgeRelationForm_this.Close();
         }

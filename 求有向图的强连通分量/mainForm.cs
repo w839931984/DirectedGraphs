@@ -17,6 +17,11 @@ namespace 求有向图的强连通分量
         public static VertexNode[] vertexs;
         public delegate void ChildClose();
 
+        public static int[] DFN;
+        public static int[] LOW;
+        public static int index = -1;
+        public static Stack<VertexNode> stack;
+
         public mainForm()
         {
             m_this = this;
@@ -175,7 +180,56 @@ namespace 求有向图的强连通分量
         private void mainForm_Shown(object sender, EventArgs e)
         {
             //求有向强连通分量
+            MessageBox.Show("fhsghwaeohgo");
+            for (int i = 0; i < vertexs.Length; i++)
+            {
+                if (DFN[i] != -1)
+                {
+                    m_this.DFS(vertexs[i]);
+                }
+            }
+            
 
+        }
+
+        private void DFS(VertexNode tailv)
+        {
+            //设置次序，LOW初值
+            DFN[tailv.firstout.tailvex] = LOW[tailv.firstout.tailvex] = ++index;
+            MessageBox.Show(tailv.firstout.tailvex + "");
+            //进栈
+            stack.Push(tailv);
+            //设置访问状态
+            tailv.visited = true;
+            VertexNode headv = new VertexNode();
+            for (EdgeNode e = tailv.firstout; e != null; e = e.taillink)
+            {
+                headv = vertexs[e.headvex];
+                if (!headv.visited)
+                {
+                    DFS(headv);
+                    LOW[tailv.firstout.tailvex] = Math.Min(LOW[tailv.firstout.tailvex], LOW[headv.firstout.tailvex]);
+                }
+                else if (stack.Contains(headv))
+                {
+                    LOW[tailv.firstout.tailvex] = Math.Min(LOW[tailv.firstout.tailvex], DFN[headv.firstout.tailvex]);
+                }
+            }
+            if (DFN[tailv.firstout.tailvex] == LOW[tailv.firstout.tailvex])
+            {
+                headv = stack.Peek();
+                headv.visited = false;
+                stack.Pop();
+                StringBuilder str = new StringBuilder(headv.firstout.tailvex);
+                while (tailv.firstout.tailvex != headv.firstout.tailvex)
+                {
+                    headv = stack.Peek();
+                    headv.visited = false;
+                    stack.Pop();
+                    str.Append("," + headv.firstout.tailvex);
+                }
+                MessageBox.Show(str.ToString());
+            }
         }
 
     }
