@@ -40,7 +40,7 @@
             this.MaximizeBox = false;
             this.Name = "EdgeRelationForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "EdgeRelationForm";
+            this.Text = "勾选顶点间的关系";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.EdgeRelationForm_FormClosing);
             this.Shown += new System.EventHandler(this.EdgeRelationForm_Shown);
             this.ResumeLayout(false);

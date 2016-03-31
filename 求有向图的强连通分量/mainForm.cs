@@ -20,8 +20,8 @@ namespace 求有向图的强连通分量
         public static int[] DFN;
         public static int[] LOW;
         public static int index = -1;
+        public static int count = 0;
         public static Stack<VertexNode> stack = new Stack<VertexNode>();
-        public static List<String> list = new List<String>();
 
         public mainForm()
         {
@@ -42,30 +42,8 @@ namespace 求有向图的强连通分量
 
         private void mainForm_Load(object sender, EventArgs e)
         {
+            m_this.Visible = false;
             new VertexNumForm().ShowDialog();
-        }
-
-        private void mainForm_Paint(object sender, PaintEventArgs e)
-        {
-            //这里开始绘制有向图
-            Graphics g = e.Graphics;
-            Pen p = new Pen(Color.Black, 2);
-            Font font = new Font("宋体", 26);
-            Brush brush = System.Drawing.Brushes.Black;
-            g.SmoothingMode = SmoothingMode.AntiAlias;
-            g.FillRectangle(Brushes.White, this.ClientRectangle);
-            AdjustableArrowCap lineCap = new AdjustableArrowCap(5, 10, true);
-            p.StartCap = LineCap.Round;
-            p.CustomEndCap = lineCap;
-
-            //画出点
-            this.paintVertex(g, font, brush);
-
-            //画出箭头
-            this.paintArrow(g, p);
-            
-            g.Dispose();
-            p.Dispose();
         }
 
         private void paintArrow(Graphics g, Pen p)
@@ -174,13 +152,6 @@ namespace 求有向图的强连通分量
                 vertexs[i].posy = (int)(y + 0.5) + 18;
                 g.DrawString("V"+ i, font, brush, point);
             }
-            int half = vertexs.Length / 2;
-            this.Height = (int)(300 * (1 - Math.Cos(2 * Math.PI / vertexs.Length * half))) + 100;
-        }
-
-        private void mainForm_Shown(object sender, EventArgs e)
-        {
-            
         }
 
         private void DFS(VertexNode tailv)
@@ -211,20 +182,21 @@ namespace 求有向图的强连通分量
                 headv = stack.Peek();
                 //headv.visited = false;
                 stack.Pop();
-                String str = headv.id + "";
+                String str = "V" + headv.id + "";
                 while (tailv.id != headv.id)
                 {
                     headv = stack.Peek();
                     //headv.visited = false;
                     stack.Pop();
-                    str = str + "," + headv.id;
+                    str = str + ",V" + headv.id;
                 }
-                str = str + "组成一个强连通分量";
-                list.Add(str);
+                count++;
+                str = "第" + count + "个强连通分量:\r\n    " + str + "\r\n\r\n";
+                textBox1.AppendText(str);
             }
         }
 
-        private void mainForm_MouseClick(object sender, MouseEventArgs e)
+        private void button1_Click(object sender, EventArgs e)
         {
             //求有向强连通分量
             for (int i = 0; i < vertexs.Length; i++)
@@ -234,18 +206,45 @@ namespace 求有向图的强连通分量
                     m_this.DFS(vertexs[i]);
                 }
             }
-            Label lbl = new Label();
-            Label l = new Label();//声明一个label
-            l.Location = new Point(700, 300);//设置位置
-            l.AutoSize = true;//设置大小
-            l.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            String str = "";
-            foreach(String s in list)
-            {
-                str = str + "\n" + s;
-            }
-            l.Text = str;//设置Text值
-            m_this.Controls.Add(l);//在当前窗体上添加这个label控件
+            textBox1.AppendText("共有"+ count + "个强连通分量！");
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            //这里开始绘制有向图
+            Pen p = new Pen(Color.Black, 2);
+            Font font = new Font("宋体", 26);
+            Brush brush = System.Drawing.Brushes.Black;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.FillRectangle(Brushes.White, this.ClientRectangle);
+            AdjustableArrowCap lineCap = new AdjustableArrowCap(5, 10, true);
+            p.StartCap = LineCap.Round;
+            p.CustomEndCap = lineCap;
+
+            //画出点
+            m_this.paintVertex(e.Graphics, font, brush);
+
+            //画出箭头
+            m_this.paintArrow(e.Graphics, p);
+
+            p.Dispose();
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            m_this.Visible = false;
+            m_this.init();
+            new VertexNumForm().ShowDialog();
+        }
+
+        private void init()
+        {
+            index = -1;
+            count = 0;
+            Graphics g = pictureBox1.CreateGraphics();
+            g.Clear(Color.White);
+            g.Dispose();
+            textBox1.Clear();
         }
     }
 }
