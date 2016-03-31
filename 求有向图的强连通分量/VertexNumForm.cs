@@ -29,6 +29,7 @@ namespace 求有向图的强连通分量
                 vertexs[i] = new VertexNode();
                 vertexs[i].firstin = null;
                 vertexs[i].firstout = null;
+                vertexs[i].id = i;
             }
             this.Visible = false;
             userClose = false;

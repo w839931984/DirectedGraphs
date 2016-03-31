@@ -44,6 +44,7 @@
             this.Load += new System.EventHandler(this.mainForm_Load);
             this.Shown += new System.EventHandler(this.mainForm_Shown);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.mainForm_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.mainForm_MouseClick);
             this.ResumeLayout(false);
 
         }

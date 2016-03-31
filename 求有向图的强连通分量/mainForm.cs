@@ -20,7 +20,8 @@ namespace 求有向图的强连通分量
         public static int[] DFN;
         public static int[] LOW;
         public static int index = -1;
-        public static Stack<VertexNode> stack;
+        public static Stack<VertexNode> stack = new Stack<VertexNode>();
+        public static List<String> list = new List<String>();
 
         public mainForm()
         {
@@ -179,24 +180,14 @@ namespace 求有向图的强连通分量
 
         private void mainForm_Shown(object sender, EventArgs e)
         {
-            //求有向强连通分量
-            MessageBox.Show("fhsghwaeohgo");
-            for (int i = 0; i < vertexs.Length; i++)
-            {
-                if (DFN[i] != -1)
-                {
-                    m_this.DFS(vertexs[i]);
-                }
-            }
             
-
         }
 
         private void DFS(VertexNode tailv)
         {
             //设置次序，LOW初值
-            DFN[tailv.firstout.tailvex] = LOW[tailv.firstout.tailvex] = ++index;
-            MessageBox.Show(tailv.firstout.tailvex + "");
+            DFN[tailv.id] = LOW[tailv.id] = ++index;
+            //MessageBox.Show(tailv.id + "");
             //进栈
             stack.Push(tailv);
             //设置访问状态
@@ -208,29 +199,53 @@ namespace 求有向图的强连通分量
                 if (!headv.visited)
                 {
                     DFS(headv);
-                    LOW[tailv.firstout.tailvex] = Math.Min(LOW[tailv.firstout.tailvex], LOW[headv.firstout.tailvex]);
+                    LOW[tailv.id] = Math.Min(LOW[tailv.id], LOW[headv.id]);
                 }
                 else if (stack.Contains(headv))
                 {
-                    LOW[tailv.firstout.tailvex] = Math.Min(LOW[tailv.firstout.tailvex], DFN[headv.firstout.tailvex]);
+                    LOW[tailv.id] = Math.Min(LOW[tailv.id], DFN[headv.id]);
                 }
             }
-            if (DFN[tailv.firstout.tailvex] == LOW[tailv.firstout.tailvex])
+            if (DFN[tailv.id] == LOW[tailv.id])
             {
                 headv = stack.Peek();
-                headv.visited = false;
+                //headv.visited = false;
                 stack.Pop();
-                StringBuilder str = new StringBuilder(headv.firstout.tailvex);
-                while (tailv.firstout.tailvex != headv.firstout.tailvex)
+                String str = headv.id + "";
+                while (tailv.id != headv.id)
                 {
                     headv = stack.Peek();
-                    headv.visited = false;
+                    //headv.visited = false;
                     stack.Pop();
-                    str.Append("," + headv.firstout.tailvex);
+                    str = str + "," + headv.id;
                 }
-                MessageBox.Show(str.ToString());
+                str = str + "组成一个强连通分量";
+                list.Add(str);
             }
         }
 
+        private void mainForm_MouseClick(object sender, MouseEventArgs e)
+        {
+            //求有向强连通分量
+            for (int i = 0; i < vertexs.Length; i++)
+            {
+                if (!vertexs[i].visited)
+                {
+                    m_this.DFS(vertexs[i]);
+                }
+            }
+            Label lbl = new Label();
+            Label l = new Label();//声明一个label
+            l.Location = new Point(700, 300);//设置位置
+            l.AutoSize = true;//设置大小
+            l.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            String str = "";
+            foreach(String s in list)
+            {
+                str = str + "\n" + s;
+            }
+            l.Text = str;//设置Text值
+            m_this.Controls.Add(l);//在当前窗体上添加这个label控件
+        }
     }
 }

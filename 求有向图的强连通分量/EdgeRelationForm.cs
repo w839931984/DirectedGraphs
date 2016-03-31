@@ -111,8 +111,8 @@ namespace 求有向图的强连通分量
                     {
                         EdgeNode edgeNode = new EdgeNode();
 
-                        edgeNode.tailvex = i;
-                        edgeNode.headvex = j;
+                        edgeNode.tailvex = vertexs[i].id;
+                        edgeNode.headvex = vertexs[j].id;
 
                         //头插法
                         edgeNode.taillink = vertexs[i].firstout;
